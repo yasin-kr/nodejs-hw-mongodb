@@ -34,6 +34,8 @@ MONGODB_DB=your_database
 - `POST /auth/login`
 - `POST /auth/refresh`
 - `POST /auth/logout`
+- `POST /auth/send-reset-email`
+- `POST /auth/reset-pwd`
 - `GET /contacts`
 - `GET /contacts/:contactId`
 - `POST /contacts`

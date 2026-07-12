@@ -7,6 +7,7 @@ import {
   getContactById,
   updateContact,
 } from '../services/contacts.js';
+import { uploadToCloudinary } from '../utils/cloudinary.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
@@ -47,8 +48,10 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
+  const photo = req.file ? await uploadToCloudinary(req.file) : undefined;
   const contact = await createContact({
     ...req.body,
+    photo,
     userId: req.user._id,
   });
 
@@ -61,7 +64,11 @@ export const createContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
-  const contact = await updateContact(contactId, req.user._id, req.body);
+  const photo = req.file ? await uploadToCloudinary(req.file) : undefined;
+  const contact = await updateContact(contactId, req.user._id, {
+    ...req.body,
+    ...(photo ? { photo } : {}),
+  });
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
