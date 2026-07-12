@@ -1,0 +1,57 @@
+tags:
+  - Contacts
+summary: Patch contact
+operationId: patchContact
+description: Partially update a contact. The contact must belong to the authenticated user.
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: contactId
+    required: true
+    schema:
+      type: string
+    description: Contact id.
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        $ref: ../../../components/schemas/contactPatchInput.yaml
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/contactPatchInput.yaml
+responses:
+  '200':
+    description: Successfully patched a contact.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a contact!
+            data:
+              $ref: ../../../components/schemas/contact.yaml
+  '400':
+    description: Validation error.
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/error.yaml
+  '401':
+    description: Unauthorized.
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/error.yaml
+  '404':
+    description: Contact not found.
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/error.yaml

@@ -1,0 +1,61 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Contacts API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  description: >
+    API for managing personal contacts with authentication, password reset,
+    pagination, filtering, sorting, and contact photo uploads.
+tags:
+  - name: Auth
+    description: User registration, login, logout, and password reset.
+  - name: Contacts
+    description: Authenticated contact management endpoints.
+servers:
+  - url: http://localhost:3000
+  - url: https://nodejs-hw-mongodb-2-kg6x.onrender.com
+paths:
+  /auth/register:
+    $ref: ../swagger/paths/auth/register/post.yaml
+  /auth/login:
+    $ref: ../swagger/paths/auth/login/post.yaml
+  /auth/refresh:
+    $ref: ../swagger/paths/auth/refresh/post.yaml
+  /auth/logout:
+    $ref: ../swagger/paths/auth/logout/post.yaml
+  /auth/send-reset-email:
+    $ref: ../swagger/paths/auth/send-reset-email/post.yaml
+  /auth/reset-pwd:
+    $ref: ../swagger/paths/auth/reset-pwd/post.yaml
+  /contacts:
+    get:
+      $ref: ../swagger/paths/contacts/get.yaml
+    post:
+      $ref: ../swagger/paths/contacts/post.yaml
+  /contacts/{contactId}:
+    get:
+      $ref: ../swagger/paths/contacts/{contactId}/get.yaml
+    patch:
+      $ref: ../swagger/paths/contacts/{contactId}/patch.yaml
+    delete:
+      $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Contact:
+      $ref: ../swagger/components/schemas/contact.yaml
+    ContactInput:
+      $ref: ../swagger/components/schemas/contactInput.yaml
+    ContactPatchInput:
+      $ref: ../swagger/components/schemas/contactPatchInput.yaml
+    ContactListResponse:
+      $ref: ../swagger/components/schemas/contactListResponse.yaml
+    User:
+      $ref: ../swagger/components/schemas/user.yaml
+    Error:
+      $ref: ../swagger/components/schemas/error.yaml
