@@ -1,38 +1,28 @@
 {
-  "name": "nodejs-hw-mongodb",
+  "name": "hw3-crud",
   "version": "1.0.0",
-  "description": "",
+  "description": "Contacts API with Express and MongoDB",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yasin-kr/nodejs-hw-mongodb.git"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "http-errors": "^2.0.0",
+    "mongoose": "^8.9.5",
+    "pino-http": "^10.3.0"
   },
-  "keywords": [],
-  "author": "Yasin Kara <theyasin@icloud.com>",
-  "license": "ISC",
-  "type": "module",
-  "bugs": {
-    "url": "https://github.com/yasin-kr/nodejs-hw-mongodb/issues"
-  },
-  "homepage": "https://github.com/yasin-kr/nodejs-hw-mongodb#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "eslint": "^10.6.0",
     "globals": "^17.7.0",
-    "nodemon": "^3.1.14",
+    "nodemon": "^3.1.9",
     "prettier": "^3.9.4"
-  },
-  "dependencies": {
-    "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
-    "express": "^5.2.1",
-    "mongoose": "^9.7.3",
-    "pino-http": "^11.0.0"
   }
 }
