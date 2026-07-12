@@ -1,10 +1,13 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
+import jwt from 'jsonwebtoken';
 
 import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/auth.js';
 import { SessionsCollection } from '../db/models/session.js';
 import { UsersCollection } from '../db/models/user.js';
 import { createToken } from '../utils/createToken.js';
+import { env } from '../utils/env.js';
+import { sendMail } from '../utils/sendMail.js';
 import { sanitizeUser } from '../utils/sanitizeUser.js';
 
 const createSession = async (userId) => {
@@ -81,4 +84,66 @@ export const logoutUser = async ({ sessionId, refreshToken }) => {
     _id: sessionId,
     refreshToken,
   });
+};
+
+export const requestResetEmail = async ({ email }) => {
+  const user = await UsersCollection.findOne({ email });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found!');
+  }
+
+  const token = jwt.sign(
+    {
+      email,
+    },
+    env('JWT_SECRET'),
+    {
+      expiresIn: '5m',
+    },
+  );
+
+  const resetLink = `${env('APP_DOMAIN')}/reset-password?token=${token}`;
+
+  try {
+    await sendMail({
+      to: email,
+      subject: 'Reset your password',
+      html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
+    });
+  } catch {
+    throw createHttpError(
+      500,
+      'Failed to send the email, please try again later.',
+    );
+  }
+};
+
+export const resetPassword = async ({ token, password }) => {
+  let payload;
+
+  try {
+    payload = jwt.verify(token, env('JWT_SECRET'));
+  } catch {
+    throw createHttpError(401, 'Token is expired or invalid.');
+  }
+
+  const user = await UsersCollection.findOne({ email: payload.email });
+
+  if (!user) {
+    throw createHttpError(404, 'User not found!');
+  }
+
+  const encryptedPassword = await bcrypt.hash(password, 10);
+
+  await UsersCollection.updateOne(
+    {
+      _id: user._id,
+    },
+    {
+      password: encryptedPassword,
+    },
+  );
+
+  await SessionsCollection.deleteOne({ userId: user._id });
 };

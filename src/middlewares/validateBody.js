@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 
 export const validateBody = (schema) => {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body, {
+    const { error, value } = schema.validate(req.body, {
       abortEarly: false,
     });
 
@@ -11,6 +11,7 @@ export const validateBody = (schema) => {
       return;
     }
 
+    req.body = value;
     next();
   };
 };
