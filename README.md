@@ -1,6 +1,6 @@
-# Contacts API
+# Contacts Auth API
 
-Node.js, Express and MongoDB contacts CRUD API.
+Node.js, Express and MongoDB contacts CRUD API with authentication.
 
 ## Scripts
 
@@ -30,8 +30,14 @@ MONGODB_DB=your_database
 
 ## Routes
 
+- `POST /auth/register`
+- `POST /auth/login`
+- `POST /auth/refresh`
+- `POST /auth/logout`
 - `GET /contacts`
 - `GET /contacts/:contactId`
 - `POST /contacts`
 - `PATCH /contacts/:contactId`
 - `DELETE /contacts/:contactId`
+
+Contact routes require an `Authorization: Bearer <accessToken>` header.

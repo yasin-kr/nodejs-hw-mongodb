@@ -1,5 +1,5 @@
 {
-  "name": "hw4-validation",
+  "name": "hw5-auth",
   "version": "1.0.0",
   "description": "Contacts API with Express and MongoDB",
   "main": "src/index.js",
@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "http-errors": "^2.0.0",
