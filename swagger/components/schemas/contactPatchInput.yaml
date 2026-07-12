@@ -1,0 +1,29 @@
+type: object
+properties:
+  name:
+    type: string
+    minLength: 3
+    maxLength: 20
+    example: John Doe
+  phoneNumber:
+    type: string
+    minLength: 3
+    maxLength: 20
+    example: '+380000000001'
+  email:
+    type: string
+    format: email
+    example: john@example.com
+  isFavourite:
+    type: boolean
+    example: true
+  contactType:
+    type: string
+    enum:
+      - work
+      - home
+      - personal
+    example: work
+  photo:
+    type: string
+    format: binary

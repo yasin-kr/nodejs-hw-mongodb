@@ -1,10 +1,13 @@
 {
-  "name": "hw6-email-and-images",
+  "name": "hw7-swagger",
   "version": "1.0.0",
   "description": "Contacts API with Express and MongoDB",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "lint": "eslint .",
@@ -23,9 +26,11 @@
     "mongoose": "^8.9.5",
     "multer": "^2.0.2",
     "nodemailer": "^7.0.11",
-    "pino-http": "^10.3.0"
+    "pino-http": "^10.3.0",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
+    "@redocly/cli": "^2.12.1",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.6.0",
     "globals": "^17.7.0",

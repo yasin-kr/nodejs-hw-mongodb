@@ -1,0 +1,8 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: Delete the current session using cookies.
+responses:
+  '204':
+    description: Successfully logged out. No response body.

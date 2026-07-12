@@ -1,0 +1,67 @@
+tags:
+  - Contacts
+summary: Get contacts
+operationId: getContacts
+description: Get a paginated list of contacts that belong to the authenticated user.
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+      default: 1
+    description: Page number.
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      default: 10
+    description: Number of contacts per page.
+  - in: query
+    name: sortBy
+    schema:
+      type: string
+      enum: [_id, name, phoneNumber, email, isFavourite, contactType, createdAt, updatedAt]
+      default: _id
+    description: Field used for sorting.
+  - in: query
+    name: sortOrder
+    schema:
+      type: string
+      enum: [asc, desc]
+      default: asc
+    description: Sorting direction.
+  - in: query
+    name: type
+    schema:
+      type: string
+      enum: [work, home, personal]
+    description: Filter by contact type.
+  - in: query
+    name: isFavourite
+    schema:
+      type: boolean
+    description: Filter by favourite status.
+responses:
+  '200':
+    description: Successfully found contacts.
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contacts!
+            data:
+              $ref: ../../components/schemas/contactListResponse.yaml
+  '401':
+    description: Unauthorized.
+    content:
+      application/json:
+        schema:
+          $ref: ../../components/schemas/error.yaml
